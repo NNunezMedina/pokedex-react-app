@@ -32,8 +32,23 @@ const Favorites = () => {
 
         if (!response.ok) throw new Error("Failed to fetch favorites");
 
-        const data = await response.json();
-        setFavorites(data);
+        const favoritesData = await response.json();
+        
+        // Aquí hacemos otra solicitud a PokeAPI para obtener los detalles de cada Pokémon
+        const favoritesWithDetails = await Promise.all(
+          favoritesData.map(async (pokemon) => {
+            const pokeApiResponse = await fetch(
+              `https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon_name.toLowerCase()}`
+            );
+            const pokeApiData = await pokeApiResponse.json();
+            return {
+              ...pokemon, // Mantiene la data original de tu API
+              types: pokeApiData.types, // Añade los tipos del Pokémon desde PokeAPI
+            };
+          })
+        );
+
+        setFavorites(favoritesWithDetails);
       } catch (error) {
         console.error("Error fetching favorites:", error);
       } finally {
@@ -96,7 +111,7 @@ const Favorites = () => {
         {favorites.map((pokemon) => (
           <div
             key={pokemon.pokemon_id}
-            className="flex flex-row items-center rounded-lg shadow-lg p-4"
+            className="flex flex-row items-center rounded-lg shadow-[4px_4px_10px_rgba(0,0,0,0.2)] p-4 transition-transform transform hover:translate-y-[-5px] hover:translate-x-[5px]"
             style={{
               backgroundColor: typeColors[pokemon.pokemon_type] || "#fff",
               height: "150px",
@@ -110,7 +125,13 @@ const Favorites = () => {
                 style={{ fill: "white" }}
               />
               <h2 className="text-xl font-bold mb-2">{pokemon.pokemon_name}</h2>
-              <p className="capitalize">{pokemon.pokemon_type}</p>
+              <div>
+                {pokemon.types.map((typeObj, index) => (
+                  <span key={index} className="capitalize mb-2 inline-block bg-gray-100 bg-opacity-50 px-2 py-1 rounded-[15px]">
+                    {typeObj.type.name}
+                  </span>
+                ))}
+              </div>
             </div>
             <img
               src={pokemon.pokemon_avatar_url}

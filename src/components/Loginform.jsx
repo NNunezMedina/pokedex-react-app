@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "./Input";
 
 const Loginform = () => {
   const [loginData, setLoginData] = useState({
@@ -20,14 +21,16 @@ const Loginform = () => {
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <input
+          <Input
+          label="Email"
             name="email"
-            type="text"
+            type="email"
             placeholder="Email"
             value={loginData.email}
             onChange={handleChange}
           />
-          <input
+          <Input
+          label="Password"
             name="password"
             type="password"
             placeholder="Password"

@@ -18,29 +18,29 @@ const MainRoutes = () => {
   return (
     <Routes>
       <Route
-        path="/pokedex-react-app/*"
+        path="/*" // Maneja la ruta principal
         element={
           user ? (
-            <Navigate to="/pokedex-react-app/home" replace />
+            <Navigate to="/home" replace />
           ) : (
             <Unauthenticated />
           )
         }
       />
-
       <Route
-        path="/pokedex-react-app/home/*"
+        path="/home/*" // Rutas para usuarios autenticados
         element={
           user ? (
             <Authenticated user={user} />
           ) : (
-            <Navigate to="/pokedex-react-app" replace />
+            <Navigate to="/" replace />
           )
         }
       />
     </Routes>
   );
-};
+}
 
 export default App;
+
 

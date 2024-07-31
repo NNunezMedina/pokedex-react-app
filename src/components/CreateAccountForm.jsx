@@ -41,7 +41,7 @@ const CreateAccountForm = () => {
           setSuccessMessage("User created successfully!");
           setShowSuccess(true);
           setTimeout(() => {
-            navigate("/pokedex-react-app/");
+            navigate("/");
           }, 2900);
         }
       })
@@ -149,7 +149,7 @@ const CreateAccountForm = () => {
         Already have an account?
         <Link
           className="p-[10px] font-bold text-violet-600"
-          to="/pokedex-react-app/"
+          to="/"
         >
           Login
         </Link>

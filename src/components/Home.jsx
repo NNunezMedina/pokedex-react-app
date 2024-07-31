@@ -9,7 +9,7 @@ const Home = () => {
 
   const handleLogout = () => {
     logout(); 
-    navigate("/pokedex-react-app/"); 
+    navigate("/"); 
   };
 
   return (
@@ -25,7 +25,7 @@ const Home = () => {
         </div>
         <div className="flex flex-col items-center">
           <Link
-            to="/pokedex-react-app/home/pokedex"
+            to="/home/pokedex"
             className="relative flex items-center justify-between rounded-3xl bg-[#e8656c] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-7 overflow-hidden"
           >
             <img
@@ -36,7 +36,7 @@ const Home = () => {
             <span className="pl-16 text-center">Pokedex</span>
           </Link>
           <Link
-           to="/pokedex-react-app/home/favorites" 
+           to="/home/favorites" 
           className="relative flex items-center justify-between rounded-3xl bg-[#f9ce51] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-7 overflow-hidden">
             <img
               src={pokebola}

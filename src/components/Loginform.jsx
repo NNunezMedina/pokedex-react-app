@@ -109,7 +109,7 @@ const Loginform = () => {
         <div className="flex justify-center m-2 items-center">
           Dont have an account?
           <Link
-             to="/pokedex-react-app/create-account"
+             to="/create-account"
             className=" p-[10px] font-bold text-violet-600"
           >
             Create Account

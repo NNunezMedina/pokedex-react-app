@@ -8,8 +8,8 @@ const Authenticated = ({ user }) => {
   return (
     <Routes>
       <Route path="/" element={<Home user={user} />} /> 
-      <Route path="pokedex" element={<Pokedex />} /> 
-      <Route path="favorites" element={<Favorites />} />
+      <Route path="/pokedex" element={<Pokedex />} /> 
+      <Route path="/favorites" element={<Favorites />} />
     </Routes>
   );
 };

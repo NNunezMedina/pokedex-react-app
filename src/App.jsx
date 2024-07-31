@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from "./context/Auth-Context";
 import Authenticated from "./components/Authenticated";
 import Unauthenticated from "./components/Unauthenticated";
 
+
 function App() {
   return (
     <AuthProvider>

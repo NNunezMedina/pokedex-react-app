@@ -1,11 +1,12 @@
-import Form from "./components/Form";
+import Loginform from "./components/Loginform";
 
 function App() {
 
   return (
     <>
-      <Form>
-      </Form>
+      <Loginform>
+        
+      </Loginform>
     </>
   );
 }

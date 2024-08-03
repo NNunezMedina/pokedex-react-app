@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "./Input";
 
-const Loginform = () => {
+const Loginform = ({setUser}) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -10,6 +10,7 @@ const Loginform = () => {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(loginData);
+    setUser([loginData.email]);
   }
 
   function handleChange(event) {

@@ -2,7 +2,7 @@
 const Home = ({user}) => {
   return (
     <div>
-      Bienvenido {user}
+      Welcome back! {user}
     </div>
   )
 }

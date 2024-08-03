@@ -7,9 +7,15 @@ const Loginform = ({setUser}) => {
     password: "",
   });
 
+  const [errorLogin, setErrorLogin] = useState(false)
+
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(loginData);
+    if(loginData.email === "" || loginData.password === "") {
+      setErrorLogin(true);
+      return;
+    }
+    setErrorLogin(false);
     setUser([loginData.email]);
   }
 
@@ -48,6 +54,7 @@ const Loginform = ({setUser}) => {
             </button>
           </div>
         </form>
+        {errorLogin && <p className="flex justify-center text-red-600">All fields are required</p>}
       </div>
     </div>
   );

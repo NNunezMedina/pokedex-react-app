@@ -7,12 +7,12 @@ function App() {
   const [user, setUser] = useState([]);
 
   return (
-    <>
+    <div className="font-sans">
     {
       user.length <= 0 ? <Loginform setUser={setUser} /> : <Home user={user}/>
     }
       
-    </>
+    </div>
   );
 }
 

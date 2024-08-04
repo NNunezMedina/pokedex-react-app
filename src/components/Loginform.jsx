@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Loginform = ({setUser}) => {
   const [loginData, setLoginData] = useState({
@@ -9,6 +9,7 @@ const Loginform = ({setUser}) => {
   });
 
   const [errorLogin, setErrorLogin] = useState(false)
+  const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -18,6 +19,7 @@ const Loginform = ({setUser}) => {
     }
     setErrorLogin(false);
     setUser([loginData.email]);
+    navigate("/pokedex-react-app/home");
   }
 
   function handleChange(event) {

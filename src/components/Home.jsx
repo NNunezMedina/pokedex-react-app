@@ -7,7 +7,7 @@ const Home = ({ user }) => {
   const [pokemonData, setPokemonData] = useState("");
 
   function handleChange(event) {
-    setInput(event.target.value);
+    setInput(event.target.value.toLowerCase());
   }
 
   const handleKeyDown = (event) => {

@@ -13,7 +13,13 @@ function App() {
       <Route
       path="/pokedex-react-app/"
       element={
-        user.length <= 0 ? <Loginform setUser={setUser} /> : <Home user={user}/>
+        <Loginform setUser={setUser} />
+      }
+      />
+      <Route
+      path="/pokedex-react-app/home"
+      element={
+        <Home user={user}/>
       }
       />
       <Route

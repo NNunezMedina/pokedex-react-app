@@ -24,30 +24,25 @@ const Home = ({ user }) => {
     })
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevenir el envío del formulario
-    fetchPokemonData(input);
-  };
+
 
   return (
     <div className="flex flex-col h-screen w-full max-w-md mx-auto p-4 sm:max-w-lg md:max-w-xl lg:max-w-2xl items-center">
       <div className="flex gap-[15px]">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl font-bold text-center">
           What Pokemon are you looking for {user}?
         </h1>
       </div>
-      <div className="flex items-center mt-4 bg-gray-100 rounded-[10px] ml-2 p-3 gap-4">
+      <div className="flex items-center mt-4 bg-gray-100 rounded-[10px] ml-2 p-3 gap-4 w-full">
         <Search />
-        <form onSubmit={handleSubmit}>
         <input
-          className=" bg-gray-100 rounded-[10px] focus:outline-none"
+          className=" bg-gray-100 rounded-[10px] focus:outline-none flex-grow"
           type="text"
           placeholder="Search Pokemon"
           value={input}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-        </form>
       </div>
         <div className="flex flex-col items-center mt-4">
           {pokemonData? 

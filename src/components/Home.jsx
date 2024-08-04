@@ -39,7 +39,7 @@ const Home = ({ user }) => {
       <div className="flex items-center mt-4 bg-gray-100 rounded-[10px] ml-2 p-3 gap-4">
         <Search />
         <input
-          className=" bg-gray-100 rounded-[10px] focus:outline-none flex-grow"
+          className=" bg-gray-100 rounded-[10px] focus:outline-none"
           type="text"
           placeholder="Search Pokemon"
           value={input}

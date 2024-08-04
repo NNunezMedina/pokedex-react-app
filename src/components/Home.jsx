@@ -12,7 +12,7 @@ const Home = ({ user }) => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      fetchPokemonData(input);
+      fetchPokemonData(input.toLowerCase());
     }
   };
 
@@ -25,7 +25,7 @@ const Home = ({ user }) => {
   };
 
   const handleClick = () => {
-    fetchPokemonData(input);
+    fetchPokemonData(input.toLowerCase());
   };
 
   return (

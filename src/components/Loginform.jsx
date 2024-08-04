@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
+import { Link } from "react-router-dom";
 
 const Loginform = ({setUser}) => {
   const [loginData, setLoginData] = useState({
@@ -22,11 +23,12 @@ const Loginform = ({setUser}) => {
   function handleChange(event) {
     const { name, value } = event.target;
     setLoginData({ ...loginData, [name]: value });
+    setErrorLogin("");
   }
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <h1 className="flex justify-center">Welcome to your pokedex!</h1>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
@@ -55,6 +57,7 @@ const Loginform = ({setUser}) => {
           </div>
         </form>
         {errorLogin && <p className="flex justify-center text-red-600">All fields are required</p>}
+        <Link to="/pokedex-react-app/create-account" className=" p-[10px] hover:text-violet-900">Create Account</Link>
       </div>
     </div>
   );

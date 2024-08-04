@@ -35,11 +35,10 @@ const Home = ({ user }) => {
           What Pokemon are you looking for {user}?
         </h1>
       </div>
-      <div className="flex items-center mt-4 w-full">
-        <div className="flex flex-grow items-center bg-gray-100 rounded-[10px] p-3 gap-2">
+        <div className="flex items-center bg-gray-100 rounded-[10px] p-3 gap-2">
           <Search />
           <input
-            className="bg-gray-100 rounded-[10px] focus:outline-none flex-grow"
+            className="bg-gray-100 rounded-[10px] focus:outline-none "
             type="text"
             placeholder="Search Pokemon"
             value={input}
@@ -48,12 +47,12 @@ const Home = ({ user }) => {
           />
         </div>
         <button 
-          className="bg-gray-100 rounded-[10px] p-3 hover:bg-gray-300 ml-2 w-24" // Ajustar el ancho del botón
+          className="bg-gray-100 rounded-[10px] p-3 hover:bg-gray-300 ml-2 w-24 m-5" // Ajustar el ancho del botón
           onClick={handleClick}
         >
           Search
         </button>
-      </div>
+
       <div className="flex flex-col items-center mt-4">
         {pokemonData ? (
           <>

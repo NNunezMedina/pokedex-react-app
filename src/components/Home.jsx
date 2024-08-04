@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Link, useNavigate } from "react-router-dom";
 import pokemonTitle from "../assets/pokemonTitle.png";
 import { useAuth } from "../context/Auth-Context";

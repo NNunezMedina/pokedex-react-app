@@ -1,45 +1,39 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import pokemonTitle from "../assets/pokemonTitle.png"
+import pokemonTitle from "../assets/pokemonTitle.png";
+import { fetchPokemonData } from "../services/fetchPokemonData";
 
 const Home = ({ user }) => {
-  const [input, setInput] = useState("");
   const [pokemonData, setPokemonData] = useState("");
-  const [error, setError] = useState("");
+  const [state, setState] = useState({
+    status: "idle",
+    data: null,
+    error: null,
+  });
+
+  const { status, data: pokemon, error } = state;
 
   function handleChange(event) {
-    setInput(event.target.value);
+    setPokemonData(event.target.value);
   }
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      fetchPokemonData(input.toLowerCase());
+      setState({ status: "pending", data: null, error: null });
+      fetchPokemonData(pokemonData)
+        .then((data) => {
+          setState({ status: "success", data, error: null });
+        })
+        .catch(() => {
+          setState({
+            status: "error",
+            data: null,
+            error: "The pokemon doesn't exist! Try again with other Pokemon",
+          });
+        });
     }
   };
-
-  const fetchPokemonData = (pokemonName) => {
-    setError("");
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`)
-      .then((response) => {
-        if (!response.ok) 
-          if(response.status == 404) {
-            setError("Page nout found")
-          } else {
-            setError(`Pokemon not found: ${pokemonName}`);
-            return;
-          }
-        return response.json()
-      })
-      .then((data) => {
-        setPokemonData(data);
-      })
-      .catch(() => {
-        setPokemonData("");
-        setError("Page not found");
-      });
-  };
-
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -48,7 +42,7 @@ const Home = ({ user }) => {
           What Pokemon are you looking for {user}?
         </h1>
         <div className="flex justify-center">
-        <img src={pokemonTitle} alt="Pokemon title" className="m-8" />
+          <img src={pokemonTitle} alt="Pokemon title" className="m-8" />
         </div>
       </div>
       <div className="flex justify-center">
@@ -58,33 +52,34 @@ const Home = ({ user }) => {
             className="bg-gray-100 rounded-[10px] focus:outline-none sm:text-sm sm:leading-6 "
             type="text"
             placeholder="Search Pokemon"
-            value={input}
+            value={pokemonData}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
         </div>
       </div>
       <div className="flex flex-col items-center mt-4">
-      {error && <p className="text-red-600">{error}</p>}
-      {pokemonData ? (
+        {status === "idle" && "Ready to search!"}
+        {status === "pending" && "Loading..."}
+        {status === "success" && (
           <>
-            <h2 className="text-lg font-semibold">{pokemonData.name}</h2>
+            <h2 className="text-lg font-semibold">{pokemon.name}</h2>
             <img
-              src={pokemonData.sprites.other["official-artwork"].front_default}
-              alt={pokemonData.name}
+              src={pokemon.sprites.other["official-artwork"].front_default}
+              alt={pokemon.name}
               className="w-32 h-32 md:w-48 md:h-48"
             />
           </>
-        ) : !error && <p></p>}
+        )}
       </div>
       <div className="flex justify-center m-2 items-center">
-      <Link
-        to="/pokedex-react-app/"
-        className=" p-[10px] font-bold text-violet-600"
-      >
-        Close session
-      </Link>
-
+        {status === "error" && <p className="text-red-600">{error}</p>}
+        <Link
+          to="/pokedex-react-app/"
+          className=" p-[10px] font-bold text-violet-600"
+        >
+          Close session
+        </Link>
       </div>
     </div>
   );

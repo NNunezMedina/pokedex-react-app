@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import { useState } from "react";
 
@@ -11,7 +11,8 @@ const CreateAccountForm = () => {
   });
 
   const [errorCreateUser, setErrorCreateUser] = useState(false);
-  const [ passwordError, setPasswordError] = useState(false)
+  const [ passwordError, setPasswordError] = useState(false);
+  const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -25,6 +26,7 @@ const CreateAccountForm = () => {
       return;
     }
     setErrorCreateUser(false);
+    navigate('/pokedex-react-app/')
   }
 
   function handleChange(event) {
@@ -44,7 +46,8 @@ const CreateAccountForm = () => {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <h1 className="flex justify-center">Create new user</h1>
+        <h1 className="flex justify-center font-bold text-3xl text-center mb-4 ">Create new user</h1>
+        <h2 className="flex justify-center text-center mb-4">Register to see al the Pokemons that are waiting for you!</h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
             label="Name"
@@ -94,7 +97,11 @@ const CreateAccountForm = () => {
           </p>
         )}
       </div>
-      <Link to="/pokedex-react-app/">Login</Link>
+      <div className="flex justify-center m-2 items-center">
+        Already have an account?
+      <Link className="p-[10px] font-bold text-violet-600" to="/pokedex-react-app/">Login</Link>
+
+      </div>
     </div>
   );
 };

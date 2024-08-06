@@ -3,12 +3,15 @@ import Home from "./components/Home";
 import Loginform from "./components/Loginform";
 import { Route, Routes } from "react-router-dom";
 import CreateAccountForm from "./components/CreateAccountForm";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/Auth-Context";
 
 function App() {
 
   const [user, setUser] = useState([]);
 
   return (
+    <AuthProvider>
     <Routes className="font-sans">
       <Route
       path="/pokedex-react-app/"
@@ -19,7 +22,9 @@ function App() {
       <Route
       path="/pokedex-react-app/home"
       element={
-        <Home user={user}/>
+        <PrivateRoute>
+          <Home user={user}/>
+        </PrivateRoute>
       }
       />
       <Route
@@ -27,6 +32,7 @@ function App() {
       element={<CreateAccountForm/>}
       />
     </Routes>
+    </AuthProvider>
   );
 }
 

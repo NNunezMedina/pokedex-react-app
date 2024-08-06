@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import pokemonTitle from "../assets/pokemonTitle.png";
 import { fetchPokemonData } from "../services/fetchPokemonData";
+import { useAuth } from "../context/Auth-Context";
 
-const Home = ({ user }) => {
+const Home = () => {
+  const {user} = useAuth();
   const [pokemonData, setPokemonData] = useState("");
   const [state, setState] = useState({
     status: "idle",
@@ -39,7 +41,7 @@ const Home = ({ user }) => {
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="text-2xl font-bold text-center">
-          What Pokemon are you looking for {user}?
+          What Pokemon are you looking for {user.email}?
         </h1>
         <div className="flex justify-center">
           <img src={pokemonTitle} alt="Pokemon title" className="m-8" />

@@ -1,6 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import { useState } from "react";
+import pokemonLogo from "../assets/pokemon_logo.png";
+import Checksuccess from "../assets/Checksuccess.json";
+import Lottie from "lottie-react";
 
 const CreateAccountForm = () => {
   const [newUser, setNewUser] = useState({
@@ -12,6 +15,8 @@ const CreateAccountForm = () => {
 
   const [errorCreateUser, setErrorCreateUser] = useState(false);
   const [ passwordError, setPasswordError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
 
   function handleSubmit(event) {
@@ -26,9 +31,46 @@ const CreateAccountForm = () => {
       return;
     }
     setErrorCreateUser(false);
-    navigate('/pokedex-react-app/')
-  }
+  
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email: newUser.email,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: newUser.password
+      })
+    };
+    console.log("User data being sent:", newUser);
 
+    
+    fetch('https://poke-collection-api-production.up.railway.app/signup', options)
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(errData => {
+            console.error('Error details:', errData);
+            throw new Error(`HTTP error! status: ${response.status}`);
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.token) {
+          // console.log('User registered:', data);
+          setSuccessMessage("User created successfully!");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate('/pokedex-react-app/');
+          }, 2900);
+        }
+      })
+      .catch(err => {
+        console.error('Error during registration:', err);
+        setErrorCreateUser(true);
+      }); 
+  }
+  
   function handleChange(event) {
     const { name, value } = event.target;
     setNewUser({...newUser, [name]: value});
@@ -43,10 +85,22 @@ const CreateAccountForm = () => {
     }
   }
 
+  if (showSuccess) {
+    return (
+      <div className="flex min-h-full flex-col items-center justify-center px-6 py-12 lg:px-8">
+        <Lottie animationData={Checksuccess} loop={false} />
+        <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <h1 className="flex justify-center font-bold text-3xl text-center mb-4 ">Create new user</h1>
+        <div className="flex justify-center"> 
+          <img src={pokemonLogo} alt="PokemonLogo" className="m-4" />
+        </div>
         <h2 className="flex justify-center text-center mb-4">Register to see al the Pokemons that are waiting for you!</h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
@@ -81,7 +135,7 @@ const CreateAccountForm = () => {
             value={newUser.password}
             onChange={handleChange}
             />
-            {passwordError && <p>Password has to be min 6 characters long</p>}
+            {passwordError && <p className="flex justify-center text-red-600">Password has to be min 6 characters long</p>}
           <div>
             <button
               type="submit"

@@ -3,6 +3,8 @@ import Input from "./Input";
 import { Link, useNavigate } from "react-router-dom";
 import pokemonLogo from "../assets/pokemon_logo.png";
 import { useAuth } from "../context/Auth-Context";
+import Checksuccess from "../assets/Checksuccess.json";
+import Lottie from "lottie-react";
 
 const Loginform = ({setUser}) => {
   const {login} = useAuth(); // Obtener la función de login del contexto
@@ -13,6 +15,8 @@ const Loginform = ({setUser}) => {
 
   const [errorLogin, setErrorLogin] = useState(false);
   const [apiError, setApiError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
 
   function handleSubmit(event) {
@@ -42,7 +46,11 @@ const Loginform = ({setUser}) => {
   .then(data => {
     if(data.token) {
       login({email: loginData.email}, data.token)
+      setSuccessMessage("Login successfully!");
+    setLoginSuccess(true);
+    setTimeout(() => {
       navigate("/pokedex-react-app/home");
+    },2900);
     }
   })
   .catch(err => {
@@ -58,12 +66,21 @@ const Loginform = ({setUser}) => {
     setApiError("");
   }
 
+  if (loginSuccess) {
+    return (
+      <div className="flex min-h-full flex-col items-center justify-center px-6 py-12 lg:px-8">
+        <Lottie animationData={Checksuccess} loop={false} />
+        <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <h1 className="flex justify-center font-bold text-3xl text-center ">Welcome to your POKEDEX!</h1>
         <div className="flex justify-center"> 
-          <img src={pokemonLogo} alt="PokemonLogo" className="m-8" />
+          <img src={pokemonLogo} alt="PokemonLogo" className="m-4" />
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <Input

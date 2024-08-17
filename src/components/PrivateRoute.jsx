@@ -1,15 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/Auth-Context"
+import { useAuth } from "../context/Auth-Context";
 
-const PrivateRoute = ({children}) => {
+const PrivateRoute = ({ children }) => {
+  const { user } = useAuth();
 
-    const {user} = useAuth();
+  if (!user) {
+    return <Navigate to="/pokedex-react-app/" replace />;
+  }
 
-    if(!user) {
-        return <Navigate to="/pokedex-react-app/" replace/>
-    }
-
-  return children
-}
+  return children;
+};
 
 export default PrivateRoute;

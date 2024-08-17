@@ -92,7 +92,7 @@ const Loginform = ({setUser}) => {
             onChange={handleChange}
           />
           <Input
-          label="Password"
+            label="Password"
             name="password"
             type="password"
             placeholder="Password"

@@ -87,7 +87,7 @@ const CreateAccountForm = () => {
 
   if (showSuccess) {
     return (
-      <div className="flex min-h-full flex-col items-center justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8">
         <Lottie animationData={Checksuccess} loop={false} />
         <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
       </div>
@@ -95,7 +95,7 @@ const CreateAccountForm = () => {
   }
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <h1 className="flex justify-center font-bold text-3xl text-center mb-4 ">Create new user</h1>
         <div className="flex justify-center"> 

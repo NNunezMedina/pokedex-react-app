@@ -7,7 +7,7 @@ const Home = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="text-2xl font-bold text-center">
           Welcome back! {user.email}

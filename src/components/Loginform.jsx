@@ -68,7 +68,7 @@ const Loginform = ({setUser}) => {
 
   if (loginSuccess) {
     return (
-      <div className="flex min-h-full flex-col items-center justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8">
         <Lottie animationData={Checksuccess} loop={false} />
         <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
       </div>
@@ -76,7 +76,7 @@ const Loginform = ({setUser}) => {
   }
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <h1 className="flex justify-center font-bold text-3xl text-center ">Welcome to your POKEDEX!</h1>
         <div className="flex justify-center"> 

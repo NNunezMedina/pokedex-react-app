@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { fetchPokemonData } from "../services/fetchPokemonData";
-import { Search } from "lucide-react";
+import { MoveLeft, Search } from "lucide-react";
+// import pokebolaploma from "../assets/pokebolasinfondo.png";
+import { Link } from "react-router-dom";
+import typeColors from "../services/colorPokeCard";
 
 const Pokedex = () => {
   const [pokemonData, setPokemonData] = useState("");
@@ -11,6 +14,7 @@ const Pokedex = () => {
   });
 
   const { status, data: pokemon, error } = state;
+  const [backgroundColor, setBackgroundColor] = useState("#fff");
 
   function handleChange(event) {
     setPokemonData(event.target.value);
@@ -22,6 +26,9 @@ const Pokedex = () => {
       fetchPokemonData(pokemonData)
         .then((data) => {
           setState({ status: "success", data, error: null });
+          const mainType = data.types[0].type.name;
+          const color = typeColors[mainType] || "#fff";
+          setBackgroundColor(color);
         })
         .catch(() => {
           setState({
@@ -34,11 +41,16 @@ const Pokedex = () => {
   };
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex items-center bg-gray-100 rounded-[10px] p-3 gap-2 w-full max-w-md">
+      <div className="flex justify-center items-center mt-10 gap-10">
+        <Link
+        to="/pokedex-react-app/home"
+        >
+          <MoveLeft />
+        </Link>
+        <div className="flex items-center bg-gray-100 rounded-[10px] p-3 gap-2 w-w-1/2">
           <Search />
           <input
-            className="bg-gray-100 rounded-[10px] focus:outline-none sm:text-sm sm:leading-6 "
+            className="bg-gray-100 rounded-[10px] focus:outline-none sm:text-sm sm:leading-6"
             type="text"
             placeholder="Search Pokemon"
             value={pokemonData}
@@ -46,8 +58,16 @@ const Pokedex = () => {
             onKeyDown={handleKeyDown}
           />
         </div>
+        {/* <img
+          src={pokebolaploma}
+          alt="imagenpokebola"
+          className="absolute h-[100px] w-[100px] right-0 mr-[700px]"
+        /> */}
       </div>
-      <div className="flex flex-col items-center mt-4">
+
+      <div 
+      className="flex flex-col items-center mt-4"
+      style={{backgroundColor: backgroundColor}}>
         {status === "idle" && "Ready to search!"}
         {status === "pending" && "Loading..."}
         {status === "success" && (

@@ -88,11 +88,14 @@ const CreateAccountForm = () => {
   if (showSuccess) {
     return (
       <div className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8">
-        <Lottie animationData={Checksuccess} loop={false} />
-        <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
+        <div className="flex flex-col items-center justify-center text-center">
+          <Lottie animationData={Checksuccess} loop={false} />
+          <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
+        </div>
       </div>
     );
   }
+  
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">

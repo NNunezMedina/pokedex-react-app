@@ -4,6 +4,7 @@ import { MoveLeft, Search } from "lucide-react";
 // import pokebolaploma from "../assets/pokebolasinfondo.png";
 import { Link } from "react-router-dom";
 import typeColors from "../services/colorPokeCard";
+import PokeCard from "./PokeCard";
 
 const Pokedex = () => {
   const [pokemonData, setPokemonData] = useState("");
@@ -14,10 +15,10 @@ const Pokedex = () => {
   });
 
   const { status, data: pokemon, error } = state;
-  const [backgroundColor, setBackgroundColor] = useState("#fff");
+  const [backgroundColor, setBackgroundColor] = useState("transparent");
 
   function handleChange(event) {
-    setPokemonData(event.target.value);
+    setPokemonData(event.target.value.toLowerCase());
   }
 
   const handleKeyDown = (event) => {
@@ -27,7 +28,7 @@ const Pokedex = () => {
         .then((data) => {
           setState({ status: "success", data, error: null });
           const mainType = data.types[0].type.name;
-          const color = typeColors[mainType] || "#fff";
+          const color = typeColors[mainType] || "transparent";
           setBackgroundColor(color);
         })
         .catch(() => {
@@ -36,12 +37,13 @@ const Pokedex = () => {
             data: null,
             error: "The pokemon doesn't exist! Try again with other Pokemon",
           });
+          setBackgroundColor("transparent"); 
         });
     }
   };
   return (
-    <>
-      <div className="flex justify-center items-center mt-10 gap-10">
+    <div  className="flex flex-col justify-center items-center relative min-h-full"  style={{ backgroundColor: backgroundColor }}>
+      <div className="flex justify-center items-center mt-10 gap-10 sm:w-full sm:max-w-sm">
         <Link
         to="/pokedex-react-app/home"
         >
@@ -64,27 +66,19 @@ const Pokedex = () => {
           className="absolute h-[100px] w-[100px] right-0 mr-[700px]"
         /> */}
       </div>
+      {status === "success" && (
+        <PokeCard pokemon={pokemon} />
+      )}
 
       <div 
-      className="flex flex-col items-center mt-4"
-      style={{backgroundColor: backgroundColor}}>
+      className="flex flex-col items-center mt-4 relative">
         {status === "idle" && "Ready to search!"}
         {status === "pending" && "Loading..."}
-        {status === "success" && (
-          <>
-            <h2 className="text-lg font-semibold">{pokemon.name}</h2>
-            <img
-              src={pokemon.sprites.other["official-artwork"].front_default}
-              alt={pokemon.name}
-              className="w-32 h-32 md:w-48 md:h-48"
-            />
-          </>
-        )}
       </div>
-      <div className="flex justify-center m-2 items-center">
+      <div className="flex justify-center m-2 items-center relative">
         {status === "error" && <p className="text-red-600">{error}</p>}
       </div>
-    </>
+    </div>
   );
 };
 

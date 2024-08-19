@@ -42,15 +42,15 @@ const Pokedex = () => {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center relative min-h-full p-4 sm:p-6" style={{ backgroundColor: backgroundColor }}>
-      <div className="flex justify-center items-center mt-10 gap-4 sm:gap-10 w-full max-w-lg">
+    <div className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8" style={{ backgroundColor: backgroundColor }}>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/pokedex-react-app/home">
           <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8" />
         </Link>
         <div className="flex items-center bg-gray-100 rounded-[10px] p-3 gap-2 w-full">
-          <Search className="h-5 w-5 sm:h-6 sm:w-6" />
+          <Search className="h-5 w-5" />
           <input
-            className="bg-gray-100 rounded-[10px] focus:outline-none text-sm w-full"
+            className="bg-gray-100 rounded-[10px] focus:outline-none text-sm space-y-6"
             type="text"
             placeholder="Search Pokemon"
             value={pokemonData}

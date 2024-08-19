@@ -3,7 +3,7 @@ const PokeCard = ({ pokemon }) => {
   
     return (
       <div 
-        className="flex flex-col items-center mt-4 p-4 rounded-lg sm:w-full sm:max-w-sm"
+        className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8"
       >
         <h2 className="text-lg font-semibold text-white mb-10">{pokemon.name}</h2>
         <img

@@ -42,17 +42,15 @@ const Pokedex = () => {
     }
   };
   return (
-    <div  className="flex flex-col justify-center items-center relative min-h-full"  style={{ backgroundColor: backgroundColor }}>
-      <div className="flex justify-center items-center mt-10 gap-10 sm:w-full sm:max-w-sm">
-        <Link
-        to="/pokedex-react-app/home"
-        >
-          <MoveLeft />
+    <div className="flex flex-col justify-center items-center relative min-h-full p-4 sm:p-6" style={{ backgroundColor: backgroundColor }}>
+      <div className="flex justify-center items-center mt-10 gap-4 sm:gap-10 w-full max-w-lg">
+        <Link to="/pokedex-react-app/home">
+          <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8" />
         </Link>
-        <div className="flex items-center bg-gray-100 rounded-[10px] p-3 gap-2 w-w-1/2">
-          <Search />
+        <div className="flex items-center bg-gray-100 rounded-[10px] p-3 gap-2 w-full">
+          <Search className="h-5 w-5 sm:h-6 sm:w-6" />
           <input
-            className="bg-gray-100 rounded-[10px] focus:outline-none sm:text-sm sm:leading-6"
+            className="bg-gray-100 rounded-[10px] focus:outline-none text-sm w-full"
             type="text"
             placeholder="Search Pokemon"
             value={pokemonData}
@@ -60,18 +58,10 @@ const Pokedex = () => {
             onKeyDown={handleKeyDown}
           />
         </div>
-        {/* <img
-          src={pokebolaploma}
-          alt="imagenpokebola"
-          className="absolute h-[100px] w-[100px] right-0 mr-[700px]"
-        /> */}
       </div>
-      {status === "success" && (
-        <PokeCard pokemon={pokemon} />
-      )}
+      {status === "success" && <PokeCard pokemon={pokemon} />}
 
-      <div 
-      className="flex flex-col items-center mt-4 relative">
+      <div className="flex flex-col items-center mt-4 relative">
         {status === "idle" && "Ready to search!"}
         {status === "pending" && "Loading..."}
       </div>

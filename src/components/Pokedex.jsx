@@ -37,17 +37,20 @@ const Pokedex = () => {
             data: null,
             error: "The pokemon doesn't exist! Try again with other Pokemon",
           });
-          setBackgroundColor("transparent"); 
+          setBackgroundColor("transparent");
         });
     }
   };
   return (
-    <div className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8" style={{ backgroundColor: backgroundColor }}>
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div
+      className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8"
+      style={{ backgroundColor: backgroundColor }}
+    >
+      <div className="flex justify-center mt-10 sm:mx-auto sm:w-full sm:max-w-sm gap-2 items-center">
         <Link to="/pokedex-react-app/home">
-          <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+          <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" />
         </Link>
-        <div className="flex items-center bg-gray-100 bg-opacity-70 rounded-[10px] p-3 gap-2 w-full">
+        <div className="flex items-center bg-gray-100 bg-opacity-70 rounded-[10px] p-3 gap-2 w-2/3">
           <Search className="h-5 w-5" />
           <input
             className="bg-gray-100 rounded-[10px] focus:outline-none text-sm space-y-6 bg-opacity-5"
@@ -59,6 +62,7 @@ const Pokedex = () => {
           />
         </div>
       </div>
+
       {status === "success" && <PokeCard pokemon={pokemon} />}
 
       <div className="flex flex-col items-center mt-4 relative">

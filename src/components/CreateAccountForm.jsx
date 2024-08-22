@@ -14,9 +14,10 @@ const CreateAccountForm = () => {
   });
 
   const [errorCreateUser, setErrorCreateUser] = useState(false);
-  const [ passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   function handleSubmit(event) {
@@ -31,57 +32,57 @@ const CreateAccountForm = () => {
       return;
     }
     setErrorCreateUser(false);
-  
-    const options = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        email: newUser.email,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: newUser.password
-      })
-    };
-    console.log("User data being sent:", newUser);
+    setIsSubmitting(true);
 
-    
-    fetch('https://poke-collection-api-production.up.railway.app/signup', options)
-      .then(response => {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser),
+    };
+
+    fetch(
+      "https://poke-collection-api-production.up.railway.app/signup",
+      options
+    )
+      .then((response) => {
         if (!response.ok) {
-          return response.json().then(errData => {
-            console.error('Error details:', errData);
+          return response.json().then((errData) => {
+            console.error("Error details:", errData);
             throw new Error(`HTTP error! status: ${response.status}`);
           });
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         if (data.token) {
           // console.log('User registered:', data);
           setSuccessMessage("User created successfully!");
           setShowSuccess(true);
           setTimeout(() => {
-            navigate('/pokedex-react-app/');
+            navigate("/pokedex-react-app/");
           }, 2900);
         }
       })
-      .catch(err => {
-        console.error('Error during registration:', err);
+      .catch((err) => {
+        console.error("Error during registration:", err);
         setErrorCreateUser(true);
-      }); 
+      })
+      .finally(() => {
+        setIsSubmitting(false); // Reinicia el estado de la solicitud
+      });
   }
-  
+
   function handleChange(event) {
     const { name, value } = event.target;
-    setNewUser({...newUser, [name]: value});
+    setNewUser({ ...newUser, [name]: value });
     setErrorCreateUser("");
 
-    if(name === "password") {
-        if(value.length <6) {
-            setPasswordError(true)
-        } else {
-            setPasswordError(false)
-        }
+    if (name === "password") {
+      if (value.length < 6) {
+        setPasswordError(true);
+      } else {
+        setPasswordError(false);
+      }
     }
   }
 
@@ -95,16 +96,19 @@ const CreateAccountForm = () => {
       </div>
     );
   }
-  
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <h1 className="flex justify-center font-bold text-3xl text-center mb-4 ">Create new user</h1>
-        <div className="flex justify-center"> 
+        <h1 className="flex justify-center font-bold text-3xl text-center mb-4 ">
+          Create new user
+        </h1>
+        <div className="flex justify-center">
           <img src={pokemonLogo} alt="PokemonLogo" className="m-4" />
         </div>
-        <h2 className="flex justify-center text-center mb-4">Register to see al the Pokemons that are waiting for you!</h2>
+        <h2 className="flex justify-center text-center mb-4">
+          Register to see al the Pokemons that are waiting for you!
+        </h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
             label="Name"
@@ -137,14 +141,18 @@ const CreateAccountForm = () => {
             placeholder="********"
             value={newUser.password}
             onChange={handleChange}
-            />
-            {passwordError && <p className="flex justify-center text-red-600">Password has to be min 6 characters long</p>}
+          />
+          {passwordError && (
+            <p className="flex justify-center text-red-600">
+              Password has to be min 6 characters long
+            </p>
+          )}
           <div>
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-violet-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-6"
             >
-              Create Account
+              {isSubmitting ? "Creating Account..." : "Create Account"}
             </button>
           </div>
         </form>
@@ -156,8 +164,12 @@ const CreateAccountForm = () => {
       </div>
       <div className="flex justify-center m-2 items-center">
         Already have an account?
-      <Link className="p-[10px] font-bold text-violet-600" to="/pokedex-react-app/">Login</Link>
-
+        <Link
+          className="p-[10px] font-bold text-violet-600"
+          to="/pokedex-react-app/"
+        >
+          Login
+        </Link>
       </div>
     </div>
   );

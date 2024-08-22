@@ -71,11 +71,11 @@ const Pokedex = () => {
       <div className="flex justify-center m-2 items-center relative">
         {status === "error" && <p className="text-red-600">{error}</p>}
       </div>
-        {/* <img
+        <img
             src={pokebolablanca}
             alt="Icon"
             className="absolute top-[200px] right-[320px] h-[200px] w-[200px] z-0"
-          /> */}
+          />
     </div>
   );
 };

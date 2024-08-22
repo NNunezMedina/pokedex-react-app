@@ -16,6 +16,14 @@ const PokeCard = ({ pokemon }) => {
 
   const formattedId = pokemon.id.toString().padStart(3, "0");
 
+  const getAbbreviatedStatName = (name) => {
+    const statMap = {
+      "special-attack": "Sp. Att",
+      "special-defense": "Sp. Def",
+    };
+    return statMap[name] || capitalizeFirstLetter(name);
+  };
+
   return (
     <div className="flex-row mt-2 px-2 py-1 ">
       <div className="flex justify-around items-center">
@@ -70,6 +78,7 @@ const PokeCard = ({ pokemon }) => {
             Moves
           </li>
         </ul>
+        <hr/>
         <div className=" flex mt-2 ml-3">
           {toggle === 1 && (
             <ul className="mb-2">
@@ -106,15 +115,33 @@ const PokeCard = ({ pokemon }) => {
               </li>
             </ul>
           )}
-          <div className="relative z-10">
-          {toggle === 2 && <ul>Base Stats</ul>}
+         {toggle === 2 && (
+  <ul className="mb-2">
+    {pokemon.stats.map((stat, index) => (
+      <li
+        key={index}
+        className="text-sm font-medium mb-2 flex items-center"
+      >
+        <span className="text-gray-400 flex-1 mb-1">
+          {getAbbreviatedStatName(stat.stat.name)}:
+        </span>
+        <div className="flex items-center space-x-2">
+          <span className="text-gray-600 ml-4">{stat.base_stat}</span>
+          <div className="relative w-[200px] h-[3px] bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="absolute top-0 left-0 h-full bg-green-500"
+              style={{ width: `${Math.min(stat.base_stat, 100)}%` }}
+            />
+          </div>
+        </div>
+      </li>
+    ))}
+  </ul>
+)}
           {toggle === 3 && <ul>Evolution</ul>}
           {toggle === 4 && <ul>Moves</ul>}
-          </div>
-
         </div>
       </div>
-        
     </div>
   );
 };

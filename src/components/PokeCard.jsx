@@ -25,7 +25,7 @@ const PokeCard = ({ pokemon }) => {
   };
 
   return (
-    <div className="flex-row mt-2 px-2 py-1 ">
+    <div className="relative flex-row mt-2 px-2 py-1 z-10">
       <div className="flex justify-around items-center">
         <h2 className=" text-lg font-semibold text-white ml-1">
           {capitalizeFirstLetter(pokemon.name)}

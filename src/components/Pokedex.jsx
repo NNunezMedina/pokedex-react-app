@@ -46,6 +46,11 @@ const Pokedex = () => {
       className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8"
       style={{ backgroundColor: backgroundColor }}
     >
+      <img
+        src={pokebolablanca}
+        alt="Icon"
+        className="absolute top-[200px] right-[320px] h-[200px] w-[200px] z-0"
+      />
       <div className="flex justify-center mt-10 sm:mx-auto sm:w-full sm:max-w-sm gap-2 items-center">
         <Link to="/pokedex-react-app/home">
           <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" />
@@ -71,11 +76,6 @@ const Pokedex = () => {
       <div className="flex justify-center m-2 items-center relative">
         {status === "error" && <p className="text-red-600">{error}</p>}
       </div>
-        <img
-            src={pokebolablanca}
-            alt="Icon"
-            className="absolute top-[200px] right-[320px] h-[200px] w-[200px] z-0"
-          />
     </div>
   );
 };

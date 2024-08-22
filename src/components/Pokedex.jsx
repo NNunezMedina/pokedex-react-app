@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { fetchPokemonData } from "../services/fetchPokemonData";
 import { MoveLeft, Search } from "lucide-react";
-// import pokebolaploma from "../assets/pokebolasinfondo.png";
+import pokebolablanca from "../assets/pokebolasinfondo.png";
 import { Link } from "react-router-dom";
 import typeColors from "../services/colorPokeCard";
 import PokeCard from "./PokeCard";
@@ -64,7 +64,6 @@ const Pokedex = () => {
       </div>
 
       {status === "success" && <PokeCard pokemon={pokemon} />}
-
       <div className="flex flex-col items-center mt-4 relative">
         {status === "idle" && "Ready to search!"}
         {status === "pending" && "Loading..."}
@@ -72,6 +71,11 @@ const Pokedex = () => {
       <div className="flex justify-center m-2 items-center relative">
         {status === "error" && <p className="text-red-600">{error}</p>}
       </div>
+        {/* <img
+            src={pokebolablanca}
+            alt="Icon"
+            className="absolute top-[200px] right-[320px] h-[200px] w-[200px] z-0"
+          /> */}
     </div>
   );
 };

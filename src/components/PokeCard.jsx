@@ -1,20 +1,20 @@
 import { Heart } from "lucide-react";
-import pokebolablanca from "../assets/pokebolasinfondo.png";
+
 import { useState } from "react";
 
 const PokeCard = ({ pokemon }) => {
-  const [activeSection, setActiveSection] = useState("about");
+  const [toggle, setToggle] = useState(1);
   if (!pokemon) return null;
+
+  function updateToggle(id) {
+    setToggle(id);
+  }
 
   const capitalizeFirstLetter = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
   };
 
   const formattedId = pokemon.id.toString().padStart(3, "0");
-
-  const handleSectionClick = (section) => {
-    setActiveSection(activeSection === section ? null : section);
-  };
 
   return (
     <div className="flex-row mt-2 px-2 py-1 ">
@@ -42,44 +42,36 @@ const PokeCard = ({ pokemon }) => {
           alt={pokemon.name}
           className="w-48 h-48 md:w-40 md:h-40 mt-2 z-10"
         />
-        <img
-          src={pokebolablanca}
-          alt="Icon"
-          className="absolute left-20 h-50 w-50 z-0 "
-        />
       </div>
       <div className=" bg-white rounded-lg mt-2">
-        <header className="flex flex-row space-x-2">
-          <button
-            onClick={() => handleSectionClick("about")}
-            className={`rounded-md px-3 py-2 text-sm font-medium ${
-              activeSection === "about" ? "text-black" : "text-gray-400"
-            }`}
+        <ul className="flex flex-row space-x-2">
+          <li
+            className="rounded-md px-3 py-2 text-sm font-medium text-gray-400"
+            onClick={() => updateToggle(1)}
           >
             About
-          </button>
-
-          <a
-            href="#"
-            className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+          </li>
+          <li
+            className="rounded-md px-3 py-2 text-sm font-medium  text-gray-400"
+            onClick={() => updateToggle(2)}
           >
             Base Stats
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+          </li>
+          <li
+            className="rounded-md px-3 py-2 text-sm font-medium  text-gray-400"
+            onClick={() => updateToggle(3)}
           >
             Evolution
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+          </li>
+          <li
+            className="rounded-md px-3 py-2 text-sm font-medium  text-gray-400"
+            onClick={() => updateToggle(4)}
           >
             Moves
-          </a>
-        </header>
+          </li>
+        </ul>
         <div className=" flex mt-2 ml-3">
-          {activeSection === "about" && (
+          {toggle === 1 && (
             <ul className="mb-2">
               <li className="text-sm font-medium mb-2">
                 <span className="text-gray-400 mr-8">Height:</span>
@@ -112,11 +104,17 @@ const PokeCard = ({ pokemon }) => {
                   ))}
                 </span>
               </li>
-
             </ul>
           )}
+          <div className="relative z-10">
+          {toggle === 2 && <ul>Base Stats</ul>}
+          {toggle === 3 && <ul>Evolution</ul>}
+          {toggle === 4 && <ul>Moves</ul>}
+          </div>
+
         </div>
       </div>
+        
     </div>
   );
 };

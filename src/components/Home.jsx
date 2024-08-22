@@ -7,7 +7,7 @@ const Home = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center px-6 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="text-2xl font-bold text-center">
           Welcome back! {user.email}
@@ -38,7 +38,7 @@ const Home = () => {
             <span className="pl-16 text-center">Favorites</span>
           </Link>
 
-          <Link className="relative flex items-center justify-between rounded-3xl bg-[#57cba4] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-7 overflow-hidden">
+          <Link className="relative flex items-center justify-between rounded-3xl bg-[#57cba4] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-5 overflow-hidden">
             <img
               src={pokebola}
               alt="Icon"
@@ -49,12 +49,12 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex justify-center m-2 items-center">
+      <div className="flex justify-center items-center">
         <Link
           to="/pokedex-react-app/"
           className=" p-[10px] font-bold text-violet-600"
         >
-          Close session
+          Log out
         </Link>
       </div>
     </div>

@@ -5,6 +5,7 @@ const PokeCard = ({ pokemon }) => {
   const [toggle, setToggle] = useState(1);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionImages, setEvolutionImages] = useState({});
+  const [moveDetails, setMoveDetails] = useState([]);
 
   if (!pokemon) return null;
 
@@ -59,6 +60,27 @@ const PokeCard = ({ pokemon }) => {
         });
     }
   }, [toggle, pokemon.id]);
+
+  useEffect(() => {
+    if (toggle === 4) {
+      const fetchMoveDetails = async () => {
+        const moveDetailsArray = await Promise.all(
+          pokemon.moves.slice(0, 5).map(async (move) => {
+            const response = await fetch(move.move.url);
+            const moveData = await response.json();
+            return {
+              name: move.move.name,
+              accuracy: moveData.accuracy,
+            };
+          })
+        );
+        setMoveDetails(moveDetailsArray);
+      };
+      fetchMoveDetails();
+    }
+  }, [toggle, pokemon.moves]);
+
+  
 
   return (
     <div className="relative flex-row mt-2 px-2 py-1 z-10">
@@ -211,7 +233,33 @@ const PokeCard = ({ pokemon }) => {
               ))}
             </ul>
           )}
-          {toggle === 4 && <ul>Moves</ul>}
+           {toggle === 4 && (
+            <ul className="mb-2">
+              {moveDetails.map((move, index) => (
+                <li
+                  key={index}
+                  className="text-sm font-medium mb-2 flex items-center"
+                >
+                  <span className="text-gray-400 flex-1 mb-1">
+                    {capitalizeFirstLetter(move.name)}
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-600 ml-4">
+                      {move.accuracy || "N/A"}
+                    </span>
+                    <div className="relative w-[150px] h-[3px] bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className="absolute top-0 left-0 h-full bg-blue-500"
+                        style={{
+                          width: `${move.accuracy || 0}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

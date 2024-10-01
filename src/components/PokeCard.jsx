@@ -220,19 +220,116 @@ const PokeCard = ({ pokemon }) => {
             </ul>
           )}
           {toggle === 3 && (
-            <ul className="mb-2">
-              {evolutionChain.map((evolution, index) => (
-                <li key={index} className="text-sm font-medium flex items-center">
-                  <img
-                    src={evolutionImages[evolution]}
-                    alt={evolution}
-                    className="w-12 h-12 mr-2"
-                  />
-                  {evolution}
-                </li>
-              ))}
-            </ul>
-          )}
+  <div className="flex flex-col items-center justify-center mb-4 w-full">
+    {evolutionChain.length === 1 && (
+      <div className="flex flex-col items-center">
+        <img
+          src={evolutionImages[evolutionChain[0]]}
+          alt={evolutionChain[0]}
+          className="max-w-[8rem] max-h-[8rem]"
+        />
+        <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
+      </div>
+    )}
+
+    {evolutionChain.length === 2 && (
+      <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <img
+            src={evolutionImages[evolutionChain[0]]}
+            alt={evolutionChain[0]}
+            className="max-w-[8rem] max-h-[8rem]"
+          />
+          <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
+        </div>
+        <span className="text-lg font-bold mx-4">→</span>
+        <div className="flex flex-col items-center">
+          <img
+            src={evolutionImages[evolutionChain[1]]}
+            alt={evolutionChain[1]}
+            className="max-w-[8rem] max-h-[8rem]"
+          />
+          <span className="text-sm font-medium text-center">{evolutionChain[1]}</span>
+        </div>
+      </div>
+    )}
+
+    {evolutionChain.length === 3 && (
+      <>
+        <div className="flex items-center justify-center mb-4">
+          <div className="flex flex-col items-center">
+            <img
+              src={evolutionImages[evolutionChain[0]]}
+              alt={evolutionChain[0]}
+              className="max-w-[8rem] max-h-[8rem]"
+            />
+            <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
+          </div>
+          <span className="text-lg font-bold mx-4">→</span>
+          <div className="flex flex-col items-center">
+            <img
+              src={evolutionImages[evolutionChain[1]]}
+              alt={evolutionChain[1]}
+              className="max-w-[8rem] max-h-[8rem]"
+            />
+            <span className="text-sm font-medium text-center">{evolutionChain[1]}</span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <img
+            src={evolutionImages[evolutionChain[2]]}
+            alt={evolutionChain[2]}
+            className="max-w-[8rem] max-h-[8rem]"
+          />
+          <span className="text-sm font-medium text-center">{evolutionChain[2]}</span>
+        </div>
+      </>
+    )}
+
+    {evolutionChain.length === 4 && (
+      <>
+        <div className="flex items-center justify-center mb-4">
+          <div className="flex flex-col items-center">
+            <img
+              src={evolutionImages[evolutionChain[0]]}
+              alt={evolutionChain[0]}
+              className="max-w-[8rem] max-h-[8rem]"
+            />
+            <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
+          </div>
+          <span className="text-lg font-bold mx-4">→</span>
+          <div className="flex flex-col items-center">
+            <img
+              src={evolutionImages[evolutionChain[1]]}
+              alt={evolutionChain[1]}
+              className="max-w-[8rem] max-h-[8rem]"
+            />
+            <span className="text-sm font-medium text-center">{evolutionChain[1]}</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center">
+            <img
+              src={evolutionImages[evolutionChain[2]]}
+              alt={evolutionChain[2]}
+              className="max-w-[8rem] max-h-[8rem]"
+            />
+            <span className="text-sm font-medium text-center">{evolutionChain[2]}</span>
+          </div>
+          <span className="text-lg font-bold mx-4">→</span>
+          <div className="flex flex-col items-center">
+            <img
+              src={evolutionImages[evolutionChain[3]]}
+              alt={evolutionChain[3]}
+              className="max-w-[8rem] max-h-[8rem]"
+            />
+            <span className="text-sm font-medium text-center">{evolutionChain[3]}</span>
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+)}
            {toggle === 4 && (
             <ul className="mb-2">
               {moveDetails.map((move, index) => (

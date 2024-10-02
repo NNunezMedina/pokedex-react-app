@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { tokenKey } from "../cofig";
+import { fetchUserProfile } from "../services/api-fetch";
 
 const AuthContext = createContext();
 
@@ -10,30 +11,24 @@ export const AuthProvider = ({ children }) => {
   const token = sessionStorage.getItem(tokenKey);
 
   useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    fetch(
-      "https://poke-collection-api-production.up.railway.app//profile",
-      options
-    )
-      .then((response) => response.json())
+    if (!token) return;
+
+    fetchUserProfile(token)
       .then((response) => {
         const { _token, ...user } = response;
         setUser(user);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [token]);
 
   const login = (userData, token) => {
     setUser(userData);
-    sessionStorage.setItem("authToken", token);
+    sessionStorage.setItem(tokenKey, token);
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("authToken");
+    sessionStorage.removeItem(tokenKey);
   };
 
   return (

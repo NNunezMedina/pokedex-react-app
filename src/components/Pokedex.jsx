@@ -4,7 +4,7 @@ import { MoveLeft, Search } from "lucide-react";
 import pokebolablanca from "../assets/pokebolasinfondo.png";
 import { Link } from "react-router-dom";
 import typeColors from "../services/colorPokeCard";
-import PokeCard from "./PokeCard";
+import PokeCard from "./PokeCard/PokeCard";
 
 const Pokedex = () => {
   const [pokemonData, setPokemonData] = useState("");

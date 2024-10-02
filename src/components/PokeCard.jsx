@@ -220,7 +220,7 @@ const PokeCard = ({ pokemon }) => {
             </ul>
           )}
           {toggle === 3 && (
-  <div className="flex flex-col items-center justify-center mb-4 w-full">
+  <div className="flex-col items-center justify-center mb-4 w-full">
     {evolutionChain.length === 1 && (
       <div className="flex flex-col items-center">
         <img
@@ -242,7 +242,7 @@ const PokeCard = ({ pokemon }) => {
           />
           <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
         </div>
-        <span className="text-lg font-bold mx-4">→</span>
+        <span className="text-3xl font-bold mx-4">→</span>
         <div className="flex flex-col items-center">
           <img
             src={evolutionImages[evolutionChain[1]]}
@@ -265,7 +265,7 @@ const PokeCard = ({ pokemon }) => {
             />
             <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
           </div>
-          <span className="text-lg font-bold mx-4">→</span>
+          <span className="text-3xl font-bold mx-4">→</span>
           <div className="flex flex-col items-center">
             <img
               src={evolutionImages[evolutionChain[1]]}
@@ -297,7 +297,7 @@ const PokeCard = ({ pokemon }) => {
             />
             <span className="text-sm font-medium text-center">{evolutionChain[0]}</span>
           </div>
-          <span className="text-lg font-bold mx-4">→</span>
+          <span className="text-3xl font-bold mx-4">→</span>
           <div className="flex flex-col items-center">
             <img
               src={evolutionImages[evolutionChain[1]]}
@@ -316,7 +316,7 @@ const PokeCard = ({ pokemon }) => {
             />
             <span className="text-sm font-medium text-center">{evolutionChain[2]}</span>
           </div>
-          <span className="text-lg font-bold mx-4">→</span>
+          <span className="text-3xl font-bold mx-4">→</span>
           <div className="flex flex-col items-center">
             <img
               src={evolutionImages[evolutionChain[3]]}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import pokemonLogo from "../assets/pokemon_logo.png";
 import Checksuccess from "../assets/Checksuccess.json";
 import Lottie from "lottie-react";
+import { createUser } from "../services/api-fetch";
 
 const CreateAccountForm = () => {
   const [newUser, setNewUser] = useState({
@@ -34,28 +35,9 @@ const CreateAccountForm = () => {
     setErrorCreateUser(false);
     setIsSubmitting(true);
 
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser),
-    };
-
-    fetch(
-      "https://poke-collection-api-production.up.railway.app/signup",
-      options
-    )
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((errData) => {
-            console.error("Error details:", errData);
-            throw new Error(`HTTP error! status: ${response.status}`);
-          });
-        }
-        return response.json();
-      })
+    createUser(newUser) 
       .then((data) => {
         if (data.token) {
-          // console.log('User registered:', data);
           setSuccessMessage("User created successfully!");
           setShowSuccess(true);
           setTimeout(() => {
@@ -68,9 +50,10 @@ const CreateAccountForm = () => {
         setErrorCreateUser(true);
       })
       .finally(() => {
-        setIsSubmitting(false); // Reinicia el estado de la solicitud
+        setIsSubmitting(false);
       });
   }
+
 
   function handleChange(event) {
     const { name, value } = event.target;

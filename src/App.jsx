@@ -1,45 +1,43 @@
-import { useState } from "react";
-import Home from "./components/Home";
-import Loginform from "./components/Loginform";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/Auth-Context";
+import Authenticated from "./components/Authenticated";
+import Unauthenticated from "./components/Unauthenticated";
 import CreateAccountForm from "./components/CreateAccountForm";
-import Pokedex from "./components/Pokedex";
-import PrivateRoute from "./components/PrivateRoute";
-import { AuthProvider } from "./context/Auth-Context";
 
 function App() {
-  const [user, setUser] = useState([]);
-
   return (
     <AuthProvider>
-      <Routes className="font-sans">
-        <Route
-          path="/pokedex-react-app/"
-          element={<Loginform setUser={setUser} />}
-        />
-        <Route
-          path="/pokedex-react-app/home"
-          element={
-            <PrivateRoute>
-              <Home user={user} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/pokedex-react-app/home/pokedex"
-          element={
-            <PrivateRoute>
-              <Pokedex />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/pokedex-react-app/create-account"
-          element={<CreateAccountForm />}
-        />
-      </Routes>
+      <MainRoutes />
     </AuthProvider>
   );
 }
+
+const MainRoutes = () => {
+  const { user } = useAuth();
+
+  console.log("Current user:", user); // Para verificar el estado del usuario
+
+  return (
+    <Routes>
+      <Route
+        path="/pokedex-react-app/"
+        element={
+          user ? <Navigate to="/pokedex-react-app/home" replace /> : <Unauthenticated />
+        }
+      />
+      <Route
+        path="/pokedex-react-app/home/*"
+        element={user ? <Authenticated user={user} /> : <Navigate to="/pokedex-react-app/" replace />}
+      />
+      <Route
+        path="/pokedex-react-app/create-account/*" // Cambiar a "/*"
+        element={
+          user ? <Navigate to="/pokedex-react-app/home" replace /> : <Unauthenticated />
+        }
+      />
+      <Route path="/pokedex-react-app/create-account" element={<CreateAccountForm />} />
+    </Routes>
+  );
+};
 
 export default App;

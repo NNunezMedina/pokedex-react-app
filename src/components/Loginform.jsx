@@ -5,9 +5,10 @@ import pokemonLogo from "../assets/pokemon_logo.png";
 import { useAuth } from "../context/Auth-Context";
 import Checksuccess from "../assets/Checksuccess.json";
 import Lottie from "lottie-react";
+import { loginUser } from "../services/api-fetch";
 
-const Loginform = ({setUser}) => {
-  const {login} = useAuth(); // Obtener la función de login del contexto
+const Loginform = () => {
+  const { login } = useAuth();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -19,44 +20,28 @@ const Loginform = ({setUser}) => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    if(loginData.email === "" || loginData.password === "") {
+    if (loginData.email === "" || loginData.password === "") {
       setErrorLogin(true);
       return;
     }
     setErrorLogin(false);
 
-    const options = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        email:loginData.email,
-        password:loginData.password
-      })
-    };
-
-    fetch('https://poke-collection-api-production.up.railway.app//login', options)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+      const data = await loginUser(loginData.email, loginData.password);
+      if (data.token) {
+        login({ email: loginData.email }, data.token);
+        setSuccessMessage("Login successfully!");
+        setLoginSuccess(true);
+        setTimeout(() => {
+          navigate("/pokedex-react-app/home");
+        }, 2900);
       }
-      return response.json();
-    })
-  .then(data => {
-    if(data.token) {
-      login({email: loginData.email}, data.token)
-      setSuccessMessage("Login successfully!");
-    setLoginSuccess(true);
-    setTimeout(() => {
-      navigate("/pokedex-react-app/home");
-    },2900);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setApiError("User doesn't exist. Please create an account");
     }
-  })
-  .catch(err => {
-    console.error('Fetch error:',err);
-    setApiError("User doesn't exist. Please create an account")
-  });
   }
 
   function handleChange(event) {
@@ -78,13 +63,15 @@ const Loginform = ({setUser}) => {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <h1 className="flex justify-center font-bold text-3xl text-center ">Welcome to your POKEDEX!</h1>
-        <div className="flex justify-center"> 
+        <h1 className="flex justify-center font-bold text-3xl text-center ">
+          Welcome to your POKEDEX!
+        </h1>
+        <div className="flex justify-center">
           <img src={pokemonLogo} alt="PokemonLogo" className="m-4" />
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
-          label="Email"
+            label="Email"
             name="email"
             type="email"
             placeholder="Email"
@@ -108,11 +95,23 @@ const Loginform = ({setUser}) => {
             </button>
           </div>
         </form>
-        {errorLogin && <p className="flex justify-center text-red-600">All fields are required</p>}
-        {apiError && <p className="flex justify-center text-red-600 mt-2">{apiError}</p>}
+        {errorLogin && (
+          <p className="flex justify-center text-red-600">
+            All fields are required
+          </p>
+        )}
+        {apiError && (
+          <p className="flex justify-center text-red-600 mt-2">{apiError}</p>
+        )}
         <div className="flex justify-center m-2 items-center">
-            Dont have an account?
-              <Link to="/pokedex-react-app/create-account" className=" p-[10px] font-bold text-violet-600">Create Account</Link>
+          Dont have an account?
+          <Link
+             to="/pokedex-react-app/create-account"
+            className=" p-[10px] font-bold text-violet-600"
+            onClick={() => console.log("Navigating to Create Account form")}
+          >
+            Create Account
+          </Link>
         </div>
       </div>
     </div>

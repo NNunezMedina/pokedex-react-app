@@ -1,10 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import pokemonTitle from "../assets/pokemonTitle.png";
 import { useAuth } from "../context/Auth-Context";
 import pokebola from "../assets/pokebola.png";
 
 const Home = () => {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout(); 
+    navigate("/pokedex-react-app/"); 
+  };
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 lg:px-8">
@@ -50,12 +56,12 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center items-center">
-        <Link
-          to="/pokedex-react-app/"
-          className=" p-[10px] font-bold text-violet-600"
+        <button
+          className="p-[10px] font-bold text-violet-600"
+          onClick={handleLogout}
         >
-          Log out
-        </Link>
+          Logout
+        </button>
       </div>
     </div>
   );

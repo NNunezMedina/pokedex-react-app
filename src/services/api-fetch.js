@@ -39,12 +39,18 @@ export const createUser = async (userData) => {
     body: JSON.stringify(userData),
   };
 
-  const response = await fetch(`${BASE_URI}/signup`, options);
+  try {
+    const response = await fetch(`${BASE_URI}/signup`, options);
 
-  if (!response.ok) {
-    const errData = await response.json();
-    throw new Error(errData.message || "Failed to create user");
+    if (!response.ok) {
+      const errData = await response.json();
+      console.log("Error data:", errData); 
+      throw new Error(errData.message || "Failed to create user");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error during createUser:", error);
+    throw error;
   }
-
-  return response.json();
 };

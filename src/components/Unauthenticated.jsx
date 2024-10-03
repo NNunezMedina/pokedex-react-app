@@ -3,13 +3,12 @@ import CreateAccountForm from "./CreateAccountForm";
 import Loginform from "./Loginform";
 
 const Unauthenticated = () => {
-  
-    return (
-      <Routes>
-        <Route path="/" element={<Loginform />} />
-        <Route path="/create-account" element={<CreateAccountForm />} /> 
-      </Routes>
-    );
-  };
-  
-  export default Unauthenticated;
+  return (
+    <Routes>
+      <Route path="/" element={<Loginform />} />
+      <Route path="create-account" element={<CreateAccountForm />} />
+    </Routes>
+  );
+};
+
+export default Unauthenticated;

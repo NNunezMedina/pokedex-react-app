@@ -8,6 +8,7 @@ import Lottie from "lottie-react";
 import { loginUser } from "../services/api-fetch";
 
 const Loginform = () => {
+
   const { login } = useAuth();
   const [loginData, setLoginData] = useState({
     email: "",
@@ -20,28 +21,31 @@ const Loginform = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
+    
     if (loginData.email === "" || loginData.password === "") {
       setErrorLogin(true);
       return;
     }
     setErrorLogin(false);
-
-    try {
-      const data = await loginUser(loginData.email, loginData.password);
-      if (data.token) {
-        login({ email: loginData.email }, data.token);
-        setSuccessMessage("Login successfully!");
-        setLoginSuccess(true);
-        setTimeout(() => {
-          navigate("/pokedex-react-app/home");
-        }, 2900);
-      }
-    } catch (err) {
-      console.error("Fetch error:", err);
-      setApiError("User doesn't exist. Please create an account");
-    }
+  
+    // Llama a loginUser y maneja la promesa
+    loginUser(loginData.email, loginData.password)
+      .then((data) => {
+        if (data.token) {
+          login({ email: loginData.email }, data.token);
+          setSuccessMessage("Login successfully!");
+          setLoginSuccess(true);
+          setTimeout(() => {
+            navigate("/pokedex-react-app/home");
+          }, 2900);
+        }
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setApiError("User doesn't exist. Please create an account");
+      });
   }
 
   function handleChange(event) {
@@ -54,12 +58,11 @@ const Loginform = () => {
   if (loginSuccess) {
     return (
       <div className="flex min-h-full flex-col items-center justify-center px-6 py-2 lg:px-8">
-        <Lottie animationData={Checksuccess} loop={false} />
+        <Lottie animationData={Checksuccess} loop={false} style={{ width: 150, height: 150 }} />
         <p className="text-green-600 text-2xl mt-4">{successMessage}</p>
       </div>
     );
   }
-
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
@@ -108,7 +111,6 @@ const Loginform = () => {
           <Link
              to="/pokedex-react-app/create-account"
             className=" p-[10px] font-bold text-violet-600"
-            onClick={() => console.log("Navigating to Create Account form")}
           >
             Create Account
           </Link>

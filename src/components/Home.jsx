@@ -35,7 +35,9 @@ const Home = () => {
             />
             <span className="pl-16 text-center">Pokedex</span>
           </Link>
-          <Link className="relative flex items-center justify-between rounded-3xl bg-[#f9ce51] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-7 overflow-hidden">
+          <Link
+           to="/pokedex-react-app/home/favorites" 
+          className="relative flex items-center justify-between rounded-3xl bg-[#f9ce51] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-7 overflow-hidden">
             <img
               src={pokebola}
               alt="Icon"

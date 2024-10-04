@@ -24,6 +24,7 @@ const PokeCard = ({ pokemon }) => {
   const [evolutionImages, setEvolutionImages] = useState({});
   const [moveDetails, setMoveDetails] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   if (!pokemon) return null;
 
@@ -39,11 +40,20 @@ const PokeCard = ({ pokemon }) => {
   const formattedId = pokemon.id.toString().padStart(3, "0");
 
   const handleFavorite = async () => {
+    if (isFavorite) {
+      setErrorMessage("This Pokémon has already been added to favorites!");
+      setTimeout(() => {
+        setErrorMessage(''); 
+      }, 2500);
+      return;
+    }
     try {
       await addFavorite(pokemon, user.token);
       setIsFavorite(true);
+      setErrorMessage("");
     } catch (error) {
       console.error("Error adding favorite:", error);
+      setErrorMessage("Error adding favorite. Please try again.");
     }
   };
 
@@ -155,13 +165,22 @@ const PokeCard = ({ pokemon }) => {
             {capitalizeFirstLetter(typeInfo.type.name)}
           </span>
         ))}
+        <div>
+          
+        </div>
         <Heart
           className={`text-white text-opacity-90 cursor-pointer ${
             isFavorite ? "fill-current text-red-500" : ""
           }`}
           onClick={handleFavorite}
         />
+       
       </div>
+      {errorMessage && (
+          <div className="mt-1 text-black">
+            {errorMessage}
+          </div>
+        )}
 
       <div className="relative flex justify-center">
         <img

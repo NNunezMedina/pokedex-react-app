@@ -46,6 +46,45 @@ const PokeCard = ({ pokemon }) => {
     }
   };
 
+  const checkIfFavorite = async () => {
+    try {
+      if (!user || !user.token) return;
+
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const response = await fetch(
+        "https://poke-collection-api-production.up.railway.app/favorites",
+        options
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch favorites");
+
+      const data = await response.json();
+
+      // Verifica si el Pokémon actual está en la lista de favoritos
+      const favoriteExists = data.some((fav) => {
+        return Number(fav.pokemon_id) === pokemon.id;
+      });
+      
+
+      setIsFavorite(favoriteExists);
+      console.log("Favorite exists:", favoriteExists);
+    } catch (error) {
+      console.error("Error checking if favorite:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Verifica si el Pokémon es favorito cuando el componente se monta
+    checkIfFavorite();
+    console.log(checkIfFavorite());
+  }, [pokemon.id, user]);
+
   useEffect(() => {
     const fetchEvolutionData = async () => {
       try {
@@ -134,7 +173,7 @@ const PokeCard = ({ pokemon }) => {
           </span>
         ))}
         <Heart
-          className={`text-white text-opacity-90 ${
+          className={`text-white text-opacity-90 cursor-pointer ${
             isFavorite ? "fill-current text-red-500" : ""
           }`}
           onClick={handleFavorite}

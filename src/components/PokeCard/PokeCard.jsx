@@ -10,6 +10,7 @@ import Lottie from "lottie-react";
 import LoadingSpinner from "../../assets/LoadingSpinner.json";
 import { useAuth } from "../../context/Auth-Context";
 import { addFavorite } from "../Favorites/AddFavorites";
+import useCheckFavorite from "../../services/useCheckFavorite";
 const AboutSection = lazy(() => import("./AboutSection"));
 const BaseStatsSection = lazy(() => import("./BaseStatSection"));
 const EvolutionSection = lazy(() => import("./EvolutionSection"));
@@ -22,7 +23,8 @@ const PokeCard = ({ pokemon }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionImages, setEvolutionImages] = useState({});
   const [moveDetails, setMoveDetails] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const initialIsFavorite = useCheckFavorite(pokemon.id, user);
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
 
   if (!pokemon) return null;
 
@@ -45,45 +47,6 @@ const PokeCard = ({ pokemon }) => {
       console.error("Error adding favorite:", error);
     }
   };
-
-  const checkIfFavorite = async () => {
-    try {
-      if (!user || !user.token) return;
-
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const response = await fetch(
-        "https://poke-collection-api-production.up.railway.app/favorites",
-        options
-      );
-
-      if (!response.ok) throw new Error("Failed to fetch favorites");
-
-      const data = await response.json();
-
-      // Verifica si el Pokémon actual está en la lista de favoritos
-      const favoriteExists = data.some((fav) => {
-        return Number(fav.pokemon_id) === pokemon.id;
-      });
-      
-
-      setIsFavorite(favoriteExists);
-      console.log("Favorite exists:", favoriteExists);
-    } catch (error) {
-      console.error("Error checking if favorite:", error);
-    }
-  };
-
-  useEffect(() => {
-    // Verifica si el Pokémon es favorito cuando el componente se monta
-    checkIfFavorite();
-    console.log(checkIfFavorite());
-  }, [pokemon.id, user]);
 
   useEffect(() => {
     const fetchEvolutionData = async () => {

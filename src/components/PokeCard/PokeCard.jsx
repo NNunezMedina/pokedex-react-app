@@ -10,7 +10,7 @@ import Lottie from "lottie-react";
 import LoadingSpinner from "../../assets/LoadingSpinner.json";
 import { useAuth } from "../../context/Auth-Context";
 import { addFavorite } from "../Favorites/AddFavorites";
-import useCheckFavorite from "../../services/useCheckFavorite";
+import { fetchFavorites } from "../../services/useCheckFavorite";
 const AboutSection = lazy(() => import("./AboutSection"));
 const BaseStatsSection = lazy(() => import("./BaseStatSection"));
 const EvolutionSection = lazy(() => import("./EvolutionSection"));
@@ -23,8 +23,7 @@ const PokeCard = ({ pokemon }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionImages, setEvolutionImages] = useState({});
   const [moveDetails, setMoveDetails] = useState([]);
-  const initialIsFavorite = useCheckFavorite(pokemon.id, user);
-  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   if (!pokemon) return null;
 
@@ -47,6 +46,27 @@ const PokeCard = ({ pokemon }) => {
       console.error("Error adding favorite:", error);
     }
   };
+
+  const checkIfFavorite = async () => {
+    try {
+      if (!user || !user.token) return;
+
+      const data = await fetchFavorites(user.token);
+
+      // Verifica si el Pokémon actual está en la lista de favoritos
+      const favoriteExists = data.some((fav) => {
+        return Number(fav.pokemon_id) === pokemon.id;
+      });
+
+      setIsFavorite(favoriteExists);
+    } catch (error) {
+      console.error("Error checking if favorite:", error);
+    }
+  };
+
+  useEffect(() => {
+    checkIfFavorite();
+  }, [pokemon.id, user]);
 
   useEffect(() => {
     const fetchEvolutionData = async () => {

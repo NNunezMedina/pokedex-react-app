@@ -63,7 +63,6 @@ const PokeCard = ({ pokemon }) => {
 
       const data = await fetchFavorites(user.token);
 
-      // Verifica si el Pokémon actual está en la lista de favoritos
       const favoriteExists = data.some((fav) => {
         return Number(fav.pokemon_id) === pokemon.id;
       });

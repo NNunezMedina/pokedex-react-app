@@ -3,7 +3,8 @@ import { useAuth } from "../../context/Auth-Context";
 import Lottie from "lottie-react";
 import LoadingSpinner from "../../assets/LoadingSpinner.json";
 import typeColors from "../../services/colorPokeCard";
-import { Heart } from "lucide-react";
+import { Heart,MoveLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Favorites = () => {
   const { user } = useAuth();
@@ -34,7 +35,6 @@ const Favorites = () => {
 
         const favoritesData = await response.json();
         
-        // Aquí hacemos otra solicitud a PokeAPI para obtener los detalles de cada Pokémon
         const favoritesWithDetails = await Promise.all(
           favoritesData.map(async (pokemon) => {
             const pokeApiResponse = await fetch(
@@ -42,8 +42,8 @@ const Favorites = () => {
             );
             const pokeApiData = await pokeApiResponse.json();
             return {
-              ...pokemon, // Mantiene la data original de tu API
-              types: pokeApiData.types, // Añade los tipos del Pokémon desde PokeAPI
+              ...pokemon, 
+              types: pokeApiData.types, 
             };
           })
         );
@@ -106,7 +106,12 @@ const Favorites = () => {
 
   return (
     <div className="flex flex-col items-center p-6">
+       <div className="flex items-center justify-between mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <Link to="/pokedex-react-app/home">
+          <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 mb-3" />
+        </Link>
       <h1 className="text-2xl font-bold mb-4">Your Favorite Pokémons!</h1>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {favorites.map((pokemon) => (
           <div

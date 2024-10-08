@@ -3,6 +3,8 @@ import { getPokemonByZodiacSign, getZodiacSign } from '../../utils/zodiacUtils';
 import Lottie from 'lottie-react';
 import Confetti from "../../assets/Confetti.json";
 import LoadingSpinner from "../../assets/LoadingSpinner.json";
+import { Link } from 'react-router-dom';
+import { MoveLeft } from 'lucide-react';
 
 const ZodiacGame = () => {
   const [date, setDate] = useState('');
@@ -37,7 +39,12 @@ const ZodiacGame = () => {
 
   return (
     <div className="flex flex-col items-center p-6">
+      <div className="flex items-center justify-between mt-10 sm:mx-auto sm:w-full sm:max-w-sm gap-5">
+      <Link to="/pokedex-react-app/home">
+          <MoveLeft className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 mb-3" />
+        </Link>
       <h1 className="text-2xl font-bold mb-4">Discover your pokemon from your zodiac sign!</h1>
+      </div>
       <form 
       onSubmit={handleSubmit}>
         <input

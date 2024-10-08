@@ -46,7 +46,9 @@ const Home = () => {
             <span className="pl-16 text-center">Favorites</span>
           </Link>
 
-          <Link className="relative flex items-center justify-between rounded-3xl bg-[#57cba4] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-5 overflow-hidden">
+          <Link 
+          to="/home/minigame"
+          className="relative flex items-center justify-between rounded-3xl bg-[#57cba4] w-64 py-4 text-lg font-medium text-white ring-1 ring-inset ring-gray-500/10 mb-5 overflow-hidden">
             <img
               src={pokebola}
               alt="Icon"

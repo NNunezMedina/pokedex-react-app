@@ -28,7 +28,7 @@ export const getZodiacSign = (day, month) => {
   };
 
   export const getPokemonByZodiacSign = (sign) => {
-    const totalPokemons = 1302; // Total de Pokémon
+    const totalPokemons = 150; // Total de Pokémon
     const pokemonsPerSign = Math.floor(totalPokemons / 12); // Pokémon por signo
   
     const zodiacRanges = {

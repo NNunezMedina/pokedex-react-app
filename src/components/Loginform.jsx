@@ -37,9 +37,6 @@ const Loginform = () => {
           login({ email: loginData.email }, data.token);
           setSuccessMessage("Login successfully!");
           setLoginSuccess(true);
-          setTimeout(() => {
-            navigate("/pokedex-react-app/home");
-          }, 2900);
         }
       })
       .catch((err) => {

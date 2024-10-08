@@ -5,11 +5,14 @@ import LoadingSpinner from "../../assets/LoadingSpinner.json";
 import typeColors from "../../services/colorPokeCard";
 import { Heart,MoveLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import Modal from "../Modal/Modal";
 
 const Favorites = () => {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -44,6 +47,9 @@ const Favorites = () => {
             return {
               ...pokemon, 
               types: pokeApiData.types, 
+              stats: pokeApiData.stats, // Añadir stats para detalles
+              height: pokeApiData.height,
+              weight: pokeApiData.weight
             };
           })
         );
@@ -90,6 +96,16 @@ const Favorites = () => {
     } catch (error) {
       console.error("Error removing favorite:", error);
     }
+  };
+
+  const openModal = (pokemon) => {
+    setSelectedPokemon(pokemon); // Establecer el Pokémon seleccionado
+    setIsModalOpen(true); // Mostrar el modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Cerrar el modal
+    setSelectedPokemon(null); // Limpiar Pokémon seleccionado
   };
 
   if (loading) {
@@ -141,11 +157,44 @@ const Favorites = () => {
             <img
               src={pokemon.pokemon_avatar_url}
               alt={pokemon.pokemon_name}
-              className="h-32 ml-auto"
+              className="h-32 ml-auto cursor-pointer"
+              onClick={() => openModal(pokemon)}
             />
           </div>
         ))}
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {selectedPokemon && (
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-4">
+              {selectedPokemon.pokemon_name}
+            </h2>
+            <img
+              src={selectedPokemon.pokemon_avatar_url}
+              alt={selectedPokemon.pokemon_name}
+              className="mx-auto mb-4 h-48"
+            />
+            <p><strong>Height:</strong> {selectedPokemon.height} decimetres</p>
+            <p><strong>Weight:</strong> {selectedPokemon.weight} hectograms</p>
+            <div>
+              <h3 className="font-bold mt-4">Types:</h3>
+              {selectedPokemon.types.map((typeObj, index) => (
+                <span key={index} className="capitalize inline-block bg-gray-100 bg-opacity-50 px-2 py-1 rounded-[15px] m-1">
+                  {typeObj.type.name}
+                </span>
+              ))}
+            </div>
+            <div>
+              <h3 className="font-bold mt-4">Stats:</h3>
+              {selectedPokemon.stats.map((stat, index) => (
+                <p key={index}>
+                  {stat.stat.name}: {stat.base_stat}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
